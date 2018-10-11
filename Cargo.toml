@@ -1,0 +1,26 @@
+[package]
+name = "k8s-rocket-app"
+version = "0.1.0"
+authors = ["Eric Dattore <eric@dattore.me>"]
+edition = "2018"
+
+[[bin]]
+name = "k8s-app"
+path = "src/bin/main.rs"
+
+[lib]
+name = "libk8sapp"
+path = "src/lib.rs"
+
+[dependencies]
+rocket = { git = "https://github.com/SergioBenitez/Rocket", branch = "master" }
+
+[dependencies.rocket_contrib]
+git = "https://github.com/SergioBenitez/Rocket"
+branch = "master"
+features = ["json", "databases", "diesel_mysql_pool"]
+
+[dependencies.diesel]
+version = "1.0"
+features = ["mysql", "r2d2"]
+

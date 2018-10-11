@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: rocket-app
+  labels:
+    name: rocket-app
+spec:
+  replicas: 3
+  selector:
+    name: rocket-app
+  template:
+    metadata:
+      labels:
+        name: rocket-app
+    spec:
+      containers:
+      - name: rocket-app
+        image: edattore/k8s-rocket-app:latest
+        ports:
+        - containerPort: 8000
