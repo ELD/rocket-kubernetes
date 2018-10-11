@@ -1,2 +1,2 @@
 -- This file should undo anything in `up.sql`
-DROP TABLE IF EXISTS `sample`;
+DROP TABLE IF EXISTS `user`;

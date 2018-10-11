@@ -1,6 +1,6 @@
 table! {
-    sample (id) {
-        id -> Integer,
+    person (id) {
+        id -> Int4,
         email -> Varchar,
         name -> Varchar,
     }
