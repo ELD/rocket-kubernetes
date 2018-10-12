@@ -11,5 +11,5 @@ workers = 4
 log = "critical"
 secret_key = "LGnnqz5VyZlt1Bh+1znlX6WbJtL/j0cUp71L1bnlPDI="
 
-[global.databases.primary_db]
-url = "mysql://root:password@localhost/k8s"
+[development.databases.primary_db]
+url = "postgres://k8s-user:password@localhost/k8s"
