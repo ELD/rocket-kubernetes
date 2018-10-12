@@ -5,7 +5,7 @@ authors = ["Eric Dattore <eric@dattore.me>"]
 edition = "2018"
 
 [[bin]]
-name = "k8s-app"
+name = "rocket-app"
 path = "src/bin/main.rs"
 
 [lib]

@@ -1,2 +1,2 @@
 #[database("primary_db")]
-pub struct PrimaryDb(diesel::MysqlConnection);
+pub struct PrimaryDb(diesel::PgConnection);
