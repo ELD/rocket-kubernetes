@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rocket-postgres
+  labels:
+    app: rocket-postgres-svc
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: rocket-postgres
+    tier: postgres
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pv-claim
+  labels:
+    app: rocket-postgres
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: do-block-storage
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rocket-postgres
+  labels:
+    app: rocket-postgres
+spec:
+  selector:
+    matchLabels:
+      app: rocket-postgres
+      tier: postgres
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: rocket-postgres
+        tier: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:10
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: postgres-pass
+            - name: POSTGRES_USER
+              value: rocket-user
+            - name: PGDATA
+              value: /var/lib/postgresql/pgdata
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data/pgdata
+              name: postgres-persistent-storage
+      volumes:
+        - name: postgres-persistent-storage
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim

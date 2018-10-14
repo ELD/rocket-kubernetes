@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rocket-deployment
+  labels:
+    app: rocket
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rocket
+  template:
+    metadata:
+      labels:
+        app: rocket
+    spec:
+      containers:
+        - name: rocket
+          image: edattore/rocket-app:v0.0.1
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 80
+          env:
+            - name: ROCKET_DATABASES
+              valueFrom:
+                secretKeyRef:
+                  key: database-config
+                  name: rocket-db-conf

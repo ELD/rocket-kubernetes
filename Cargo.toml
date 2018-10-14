@@ -1,6 +1,6 @@
 [package]
 name = "k8s-rocket-app"
-version = "0.1.0"
+version = "0.0.1"
 authors = ["Eric Dattore <eric@dattore.me>"]
 edition = "2018"
 
@@ -11,6 +11,15 @@ path = "src/bin/main.rs"
 [lib]
 name = "libk8sapp"
 path = "src/lib.rs"
+
+[profile.release]
+lto = true
+opt-level = 3
+debug = false
+rpath = false
+debug-assertions = false
+panic = 'unwind'
+overflow-checks = false
 
 [dependencies]
 serde = "1.0.79"

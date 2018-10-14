@@ -264,7 +264,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "k8s-rocket-app"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "diesel 1.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "rocket 0.4.0-dev (git+https://github.com/SergioBenitez/Rocket)",
@@ -577,7 +577,7 @@ dependencies = [
 [[package]]
 name = "rocket"
 version = "0.4.0-dev"
-source = "git+https://github.com/SergioBenitez/Rocket#e34b2f370326c742b341b2b91f85a38d527c4981"
+source = "git+https://github.com/SergioBenitez/Rocket#085a1430750e3c52c06ead2547ff29d473899c56"
 dependencies = [
  "base64 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "isatty 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -597,7 +597,7 @@ dependencies = [
 [[package]]
 name = "rocket_codegen_next"
 version = "0.4.0-dev"
-source = "git+https://github.com/SergioBenitez/Rocket#e34b2f370326c742b341b2b91f85a38d527c4981"
+source = "git+https://github.com/SergioBenitez/Rocket#085a1430750e3c52c06ead2547ff29d473899c56"
 dependencies = [
  "derive_utils 0.1.0 (git+https://github.com/SergioBenitez/derive-utils?rev=62f361f)",
  "indexmap 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -610,7 +610,7 @@ dependencies = [
 [[package]]
 name = "rocket_contrib"
 version = "0.4.0-dev"
-source = "git+https://github.com/SergioBenitez/Rocket#e34b2f370326c742b341b2b91f85a38d527c4981"
+source = "git+https://github.com/SergioBenitez/Rocket#085a1430750e3c52c06ead2547ff29d473899c56"
 dependencies = [
  "diesel 1.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.5 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -625,7 +625,7 @@ dependencies = [
 [[package]]
 name = "rocket_contrib_codegen"
 version = "0.4.0-dev"
-source = "git+https://github.com/SergioBenitez/Rocket#e34b2f370326c742b341b2b91f85a38d527c4981"
+source = "git+https://github.com/SergioBenitez/Rocket#085a1430750e3c52c06ead2547ff29d473899c56"
 dependencies = [
  "derive_utils 0.1.0 (git+https://github.com/SergioBenitez/derive-utils?rev=62f361f)",
  "quote 0.6.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -634,7 +634,7 @@ dependencies = [
 [[package]]
 name = "rocket_http"
 version = "0.4.0-dev"
-source = "git+https://github.com/SergioBenitez/Rocket#e34b2f370326c742b341b2b91f85a38d527c4981"
+source = "git+https://github.com/SergioBenitez/Rocket#085a1430750e3c52c06ead2547ff29d473899c56"
 dependencies = [
  "cookie 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "hyper 0.10.13 (registry+https://github.com/rust-lang/crates.io-index)",
