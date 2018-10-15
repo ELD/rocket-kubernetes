@@ -1,8 +1,19 @@
 ---
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: v1
+kind: Namespace
 metadata:
-  name: traefik-ingress-controller
+  name: traefik
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: traefik
+  namespace: traefik
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: traefik
 rules:
 - apiGroups:
   - ""
@@ -22,100 +33,130 @@ rules:
   - get
   - list
   - watch
+- apiGroups:
+  - extensions
+  resources:
+  - ingresses/status
+  verbs:
+  - update
 ---
 kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: traefik-ingress-controller
+  name: traefik
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: traefik-ingress-controller
+  name: traefik
 subjects:
 - kind: ServiceAccount
-  name: traefik-ingress-controller
-  namespace: kube-system
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: traefik-ingress-controller
-  namespace: kube-system
+  name: traefik
+  namespace: traefik
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: traefik-conf
-  namespace: kube-system
+  namespace: traefik
 data:
   traefik.toml: |
     # traefik.toml
+    defaultEntryPoints = ["http", "https"]
+    logLevel = "INFO"
+    [entryPoints.http]
+    address = ":8080"
+    compress = true
+    [entryPoint.https]
+    address = ":8443"
+    compress = true
+    [entryPoint.https.tls]
+    minVersion = "VersionTLS11"
+    cipherSuits = [
+      "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+      "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+      "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305",
+      "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
+      "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+      "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+      "TLS_RSA_WITH_AES_256_GCM_SHA384",
+      "TLS_RSA_WITH_AES_128_GCM_SHA256",
+      "TLS_RSA_WITH_AES_128_CBC_SHA256",
+      "TLS_RSA_WITH_AES_256_CBC_SHA",
+      "TLS_RSA_WITH_AES_128_CBC_SHA",
+    ]
+    [entryPoints.traefik]
+    address = ":8888"
     [kubernetes]
-    namespaces = ["default", "kube-system"]
+    [kubernetes.ingressEndpoint]
+    publishedService = "traefik/traefik"
+    [api]
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: traefik-ingress-controller
-  namespace: kube-system
+  name: traefik
+  namespace: traefik
   labels:
-    k8s-app: traefik-ingress-lb
+    app: traefik
 spec:
   replicas: 1
   selector:
     matchLabels:
-      k8s-app: traefik-ingress-lb
+      app: traefik
   template:
     metadata:
       labels:
-        k8s-app: traefik-ingress-lb
-        name: traefik-ingress-lb
+        app: traefik
+        name: traefik
     spec:
-      serviceAccountName: traefik-ingress-controller
+      serviceAccountName: traefik
       terminationGracePeriodSeconds: 60
-      volumes:
-      - name: config
-        configMap:
-          name: traefik-conf
       containers:
       - image: traefik
-        name: traefik-ingress-lb
+        name: traefik
         ports:
         - name: http
-          containerPort: 80
-        - name: admin
           containerPort: 8080
-        args:
-        - --api
-        - --kubernetes
-        - --logLevel=INFO
+        - name: https
+          containerPort: 8443
+        - name: admin
+          containerPort: 8888
+        volumeMounts:
+        - mountPath: /etc/traefik
+          name: config-volume
+      volumes:
+      - name: config-volume
+        configMap:
+          name: traefik-conf
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: traefik-ingress-service
-  namespace: kube-system
+  name: traefik
+  namespace: traefik
 spec:
   selector:
-    k8s-app: traefik-ingress-lb
+    app: traefik
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 80
-      name: web
+      targetPort: 8080
+      name: http
     - protocol: TCP
-      port: 8080
-      name: admin
-  type: LoadBalancer
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: traefik-web-ui
-  namespace: kube-system
-spec:
-  selector:
-    k8s-app: traefik-ingress-lb
-  ports:
-  - name: web
-    port: 80
-    targetPort: 8080
+      port: 443
+      targetPort: 8443
+      name: https
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: traefik-web-ui
+#  namespace: traefik
+#spec:
+#  selector:
+#    app: traefik
+#  ports:
+#  - name: web
+#    port: 80
+#    targetPort: 8080

@@ -2,21 +2,14 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: traefik-web-ui
-  namespace: kube-system
+  name: traefik-ingress
+  namespace: default
 spec:
   rules:
-  - host: traefik.dattore.me
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: traefik-web-ui
-          servicePort: web
-  - host: app.dattore.me
+  - host: dattore.me
     http:
       paths:
       - path: /
         backend:
           serviceName: rocket-svc
-          servicePort: web
+          servicePort: 8080
