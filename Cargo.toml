@@ -1,40 +1,4 @@
-[package]
-name = "k8s-rocket-app"
-version = "0.0.1"
-authors = ["Eric Dattore <eric@dattore.me>"]
-edition = "2018"
-
-[[bin]]
-name = "rocket-app"
-path = "src/bin/main.rs"
-
-[lib]
-name = "libk8sapp"
-path = "src/lib.rs"
-
-[profile.release]
-lto = true
-opt-level = 3
-debug = false
-rpath = false
-debug-assertions = false
-panic = 'unwind'
-overflow-checks = false
-
-[dependencies]
-serde = "1.0.79"
-serde_derive = "1.0.79"
-
-[dependencies.rocket]
-git = "https://github.com/SergioBenitez/Rocket"
-branch = "master"
-
-[dependencies.rocket_contrib]
-git = "https://github.com/SergioBenitez/Rocket"
-branch = "master"
-features = ["json", "databases", "diesel_postgres_pool"]
-
-[dependencies.diesel]
-version = "1.0"
-features = ["postgres", "r2d2"]
-
+[workspace]
+members = [
+    "server/"
+]
