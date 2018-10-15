@@ -39,3 +39,8 @@ spec:
                 secretKeyRef:
                   key: database-config
                   name: rocket-db-conf
+            - name: ROCKET_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: secret-key
+                  name: rocket-prod-secret-key
