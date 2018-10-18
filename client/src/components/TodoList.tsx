@@ -10,13 +10,12 @@ interface IProps {
 class TodoList extends React.Component<IProps, any> {
     constructor(props: IProps) {
         super(props);
-        console.log(this.props.todos);
     }
 
     public render() {
         return(
             <ul>
-                {this.props.todos.length > 0 && this.props.todos.map((todo: ITodo) =>
+                {this.props.todos.map((todo: ITodo) =>
                     <Todo
                         key={todo.id}
                         onClick={this.handleOnClick(todo)}

@@ -1,4 +1,4 @@
-import {ADD_TODO, SET_VISIBILITY_FILTER, TOGGLE_TODO} from "../constants/index";
+import {ADD_TODO, SET_VISIBILITY_FILTER, TOGGLE_TODO} from "../constants";
 
 let nextTodoId: number = 0;
 

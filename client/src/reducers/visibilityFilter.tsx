@@ -1,8 +1,7 @@
-import {TodoAction} from "../actions";
+import {TodoAction, VisibilityFilters} from "../actions";
 import {SET_VISIBILITY_FILTER} from "../constants";
-import {DefaultState} from "../types/AppState";
 
-const visibilityFilter = (state = DefaultState.visibilityFilter, action: TodoAction) => {
+const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action: TodoAction) => {
     switch (action.type) {
         case SET_VISIBILITY_FILTER:
             return action.filter;
