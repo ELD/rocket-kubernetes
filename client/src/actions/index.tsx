@@ -1,4 +1,11 @@
-import {ADD_TODO, SET_VISIBILITY_FILTER, TOGGLE_TODO} from "../constants";
+import {
+    ADD_TODO,
+    FETCH_TODOS,
+    FETCH_TODOS_SUCCESS,
+    SET_VISIBILITY_FILTER,
+    TOGGLE_TODO
+} from "../constants";
+import {ITodo} from "../types/AppState";
 
 let nextTodoId: number = 0;
 
@@ -18,6 +25,16 @@ export interface ISetVisibilityFilter {
     filter: VisibilityFilters,
 }
 
+export interface IFetchTodos {
+    type: FETCH_TODOS
+}
+
+export interface IFetchTodosSuccess {
+    receivedAt: Date,
+    todos: ITodo[],
+    type: FETCH_TODOS_SUCCESS
+}
+
 export enum VisibilityFilters {
     SHOW_ACTIVE = 'SHOW_ACTIVE',
     SHOW_ALL = 'SHOW_ALL',
@@ -26,7 +43,9 @@ export enum VisibilityFilters {
 
 export type TodoAction = IAddTodo
     | IToggleTodo
-    | ISetVisibilityFilter;
+    | ISetVisibilityFilter
+    | IFetchTodos
+    | IFetchTodosSuccess;
 
 export function addTodo(text: string): IAddTodo {
     return {
@@ -47,5 +66,11 @@ export function setVisibilityFilter(filter: VisibilityFilters): ISetVisibilityFi
     return {
         filter,
         type: SET_VISIBILITY_FILTER
+    };
+}
+
+export function fetchTodos(): IFetchTodos {
+    return {
+        type: FETCH_TODOS
     };
 }

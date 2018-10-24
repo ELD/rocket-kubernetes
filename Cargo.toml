@@ -2,3 +2,14 @@
 members = [
     "server/"
 ]
+
+[profile.release]
+lto = true
+opt-level = "z"
+debug = false
+rpath = false
+debug-assertions = false
+panic = 'abort'
+overflow-checks = false
+incremental = false
+
