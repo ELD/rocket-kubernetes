@@ -1,14 +1,22 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {Provider} from "react-redux";
-import {createStore} from "redux";
+import 'semantic-ui-css/semantic.min.css';
 import App from "./components/App";
-import './index.css';
-import {rootReducer} from './reducers';
+import configureStore from "./configureStore";
 import registerServiceWorker from './registerServiceWorker';
-import {DefaultState} from "./types/AppState";
+import {VisibilityFilters} from "./state/visibility/types";
 
-const store = createStore(rootReducer, DefaultState as any);
+const store = configureStore({
+    todos: {
+        data: [],
+        error: undefined,
+        loading: false
+    },
+    visibility: {
+        filter: VisibilityFilters.SHOW_ALL
+    }
+});
 
 ReactDOM.render(
     <Provider store={store}>

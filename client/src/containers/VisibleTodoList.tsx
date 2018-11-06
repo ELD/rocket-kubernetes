@@ -1,8 +1,10 @@
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
-import {toggleTodo, VisibilityFilters} from "../actions";
 import TodoList from "../components/TodoList";
-import {IAppState, ITodo} from "../types/AppState";
+import {IApplicationState} from "../state";
+import {fetchTodoRequest, toggleTodoRequest} from "../state/todos/actions";
+import {ITodo} from "../state/todos/types";
+import {VisibilityFilters} from "../state/visibility/types";
 
 const getVisibleTodos = (todos: ITodo[], filter: VisibilityFilters) => {
     switch (filter) {
@@ -17,12 +19,13 @@ const getVisibleTodos = (todos: ITodo[], filter: VisibilityFilters) => {
     }
 };
 
-const mapStateToProps = (state: IAppState) => ({
-    todos: getVisibleTodos(state.todos, state.visibilityFilter)
+const mapStateToProps = (state: IApplicationState) => ({
+    todos: getVisibleTodos(state.todos.data, state.visibility.filter)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    toggleTodo: (id: number) => dispatch(toggleTodo(id))
+    fetchTodos: () => dispatch(fetchTodoRequest()),
+    toggleTodo: (todo: ITodo) => dispatch(toggleTodoRequest(todo)),
 });
 
 export default connect(

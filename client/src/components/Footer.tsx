@@ -1,6 +1,7 @@
 import * as React from "react";
-import {VisibilityFilters} from "../actions";
+import {Container} from "semantic-ui-react";
 import FilterLink from "../containers/FilterLink";
+import {VisibilityFilters} from "../state/visibility/types";
 
 class Footer extends React.Component<any, any> {
     constructor(props: any) {
@@ -9,7 +10,7 @@ class Footer extends React.Component<any, any> {
 
     public render() {
         return (
-            <div>
+            <Container>
                 <span>Show: </span>
                 <FilterLink filter={VisibilityFilters.SHOW_ALL}>
                     All
@@ -20,7 +21,7 @@ class Footer extends React.Component<any, any> {
                 <FilterLink filter={VisibilityFilters.SHOW_COMPLETED}>
                     Completed
                 </FilterLink>
-            </div>
+            </Container>
         );
     }
 }

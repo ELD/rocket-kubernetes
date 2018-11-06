@@ -1,13 +1,9 @@
 import * as React from 'react';
+import {List} from "semantic-ui-react";
+import {ITodo} from "../state/todos/types";
 
-interface IProps {
-    onClick: () => void,
-    completed: boolean,
-    text: string,
-}
-
-class Todo extends React.Component<IProps, any> {
-    constructor(props: IProps) {
+class Todo extends React.Component<ITodo, any> {
+    constructor(props: ITodo) {
         super(props);
 
         this.render = this.render.bind(this);
@@ -15,14 +11,14 @@ class Todo extends React.Component<IProps, any> {
 
     public render() {
         return (
-            <li
+            <List.Item as="li"
                 onClick={this.props.onClick}
                 style={{
                     textDecoration: this.props.completed ? 'line-through' : 'none'
                 }}
             >
-                {this.props.text}
-            </li>
+                {this.props.description}
+            </List.Item>
         );
     }
 }

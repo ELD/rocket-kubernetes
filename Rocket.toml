@@ -1,7 +1,6 @@
 [development]
 address = "localhost"
 port = 8000
-log = "debug"
 workers = 16
 
 [production]

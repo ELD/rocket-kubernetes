@@ -3,7 +3,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: traefik-ingress
-  namespace: default
+  namespace: app
 spec:
   rules:
   - host: dattore.me

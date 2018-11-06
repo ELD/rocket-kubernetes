@@ -25,6 +25,10 @@ git = "https://github.com/SergioBenitez/Rocket"
 branch = "master"
 features = ["json", "databases", "diesel_postgres_pool"]
 
+[dependencies.rocket_cors]
+git = "https://github.com/ELD/rocket_cors"
+branch = "master"
+
 [dependencies.diesel]
 version = "1.0"
 features = ["postgres", "r2d2"]

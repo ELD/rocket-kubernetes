@@ -1,7 +1,7 @@
 table! {
-    person (id) {
+    todos (id) {
         id -> Int4,
-        email -> Varchar,
-        name -> Varchar,
+        description -> Text,
+        completed -> Bool,
     }
 }

@@ -1,10 +1,12 @@
 import * as React from 'react';
-import {ITodo} from "../types/AppState";
+import {List} from "semantic-ui-react";
+import {ITodo} from "../state/todos/types";
 import Todo from "./Todo";
 
 interface IProps {
     todos: ITodo[],
-    toggleTodo: (id: number) => void,
+    fetchTodos: () => void,
+    toggleTodo: (todo: ITodo) => void,
 }
 
 class TodoList extends React.Component<IProps, any> {
@@ -12,9 +14,17 @@ class TodoList extends React.Component<IProps, any> {
         super(props);
     }
 
+    public componentDidMount() {
+        if (this.props.todos.length !== 0) {
+            return;
+        }
+
+        this.props.fetchTodos();
+    }
+
     public render() {
         return(
-            <ul>
+            <List as="ul">
                 {this.props.todos.map((todo: ITodo) =>
                     <Todo
                         key={todo.id}
@@ -22,12 +32,12 @@ class TodoList extends React.Component<IProps, any> {
                         {...todo}
                     />
                 )}
-            </ul>
+            </List>
         );
     }
 
     private handleOnClick(todo: ITodo) {
-        return (() => this.props.toggleTodo(todo.id));
+        return (() => this.props.toggleTodo(todo));
     }
 }
 

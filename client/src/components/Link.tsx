@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Button} from "semantic-ui-react";
 
 interface IProps {
     active: boolean,
@@ -13,7 +14,7 @@ class Link extends React.Component<any, any> {
 
     public render() {
         return (
-            <button
+            <Button
                 onClick={this.props.onClick}
                 disabled={this.props.active}
                 style={{
@@ -21,7 +22,7 @@ class Link extends React.Component<any, any> {
                 }}
             >
                 {this.props.children}
-            </button>
+            </Button>
         );
     }
 }
